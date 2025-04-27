@@ -1,14 +1,26 @@
-import "./App.css";
 import RegionSelect from "./Region";
-import CountriesList from "./Countries";
+import CountriesList, { getDataCountries } from "./Countries";
 import PopulationInput from "./Population";
+import { useEffect, useState } from "react";
+import { ICountryClean } from "./TYPE";
 
 function App() {
+  const [countries, setCountries] = useState<ICountryClean[]>([]);
+
+  useEffect(() => {
+    async function loadCountries() {
+      const data = await getDataCountries();
+      setCountries(data);
+    }
+
+    loadCountries();
+  }, []);
+
   return (
     <>
       <main>
         <PopulationInput />
-        <RegionSelect />
+        <RegionSelect countries={countries} />
         <CountriesList />
       </main>
     </>
