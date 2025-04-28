@@ -61,7 +61,20 @@ h3 {
 	width: 70px;
 	text-align: center;
 }
-
+.functional-block {
+	display: flex;
+	gap: 30px;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+.btn-filter {
+	color: #eaedf0;
+	background-color: #136ade;
+	padding: 5px 30px;
+	font-size: 25px;
+	letter-spacing: 1.5px;
+	border-radius: 8px;
+}
 select {
 	padding: 5px;
 	border-radius: 4px;
