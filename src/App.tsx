@@ -11,12 +11,32 @@ function App() {
     undefined
   );
 
+  const [filtArray, setFiltArray] = useState<ICountryClean[]>([]);
+  const [activeFilter, setActiveFilter] = useState(false);
+  useEffect(() => {
+    if (filtArray.length !== 0) {
+      setActiveFilter(true);
+    }
+  }, [filtArray]);
+
+  const handleCkick = () => {
+    setActiveFilter(false);
+  };
+  const renderNewArray = (
+    func: (
+      selectedValue: string | undefined,
+      countries: ICountryClean[]
+    ) => ICountryClean[]
+  ) => {
+    const resultArray = func(selectedValue, countries);
+    setFiltArray(resultArray);
+  };
+
   useEffect(() => {
     async function loadCountries() {
       const data = await getDataCountries();
       setCountries(data);
     }
-
     loadCountries();
   }, []);
 
@@ -29,10 +49,19 @@ function App() {
             countries={countries}
             onSelectChange={setSelectedValue}
           />
-          <FilterBtn selectedValue={selectedValue} array={countries} />
+          <FilterBtn
+            selectedValue={selectedValue}
+            renderNewArray={renderNewArray}
+          >
+            {activeFilter && (
+              <button type="button" onClick={handleCkick}>
+                Reset
+              </button>
+            )}
+          </FilterBtn>
         </div>
 
-        <CountriesList />
+        <CountriesList filterArray={filtArray} activeFilter={activeFilter} />
       </main>
     </>
   );
