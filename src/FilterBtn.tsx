@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { ICountryClean } from "./TYPE";
 interface IFilterBtn {
+  popChange: number;
   selectedValue: string | undefined;
   renderNewArray: (
     func: (
       selectedValue: string | undefined,
-      countries: ICountryClean[]
+      countries: ICountryClean[],
+      popChange: number
     ) => ICountryClean[]
   ) => void;
   children: React.ReactNode;
@@ -13,21 +15,28 @@ interface IFilterBtn {
 
 function newFilteredArray(
   selectedValue: string | undefined,
-  array: ICountryClean[]
+  array: ICountryClean[],
+  popChange: number
 ): ICountryClean[] {
   let newArray: ICountryClean[] = array.filter((item) => {
-    if (item.region === selectedValue) {
-      return item;
+    if (popChange === 0) {
+      if (item.region === selectedValue) {
+        return item;
+      }
+    } else if (popChange > 0 && selectedValue === undefined) {
+      if (item.population >= popChange) {
+        return item;
+      }
+    } else {
+      if (item.population >= popChange && item.region === selectedValue) {
+        return item;
+      }
     }
   });
   return newArray;
 }
 
-const FilterBtn: FC<IFilterBtn> = ({
-  selectedValue,
-  renderNewArray,
-  children,
-}) => {
+const FilterBtn: FC<IFilterBtn> = ({ renderNewArray, children }) => {
   return (
     <>
       <button
