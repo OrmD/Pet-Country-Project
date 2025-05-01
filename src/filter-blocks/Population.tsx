@@ -15,8 +15,8 @@ const PopulationInput: FC<IPopulationInput> = ({
       name="input-popul"
       id="popul"
       ref={inputRef}
-      onInput={() => getInputValue(inputRef)}
-      defaultValue={popChange}
+      onChange={() => getInputValue(inputRef)}
+      value={popChange}
     />
   );
 };

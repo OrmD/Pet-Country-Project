@@ -1,15 +1,17 @@
 import { FC } from "react";
-import { ICountryClean } from "./TYPE";
+import { ICountryClean } from "../TYPE";
 interface regionType {
   activeFilter: boolean;
   countries: ICountryClean[];
   onSelectChange: (value: string) => void;
+  selectValue: string | undefined;
 }
 
 const RegionSelect: FC<regionType> = ({
   countries,
   onSelectChange,
   activeFilter,
+  selectValue,
 }) => {
   const uniqueArray = countries.filter(
     (value, index, self) =>
@@ -31,7 +33,9 @@ const RegionSelect: FC<regionType> = ({
       name="select-region"
       id="select"
       onChange={(e) => onSelectChange(e.target.value)}
+      value={selectValue}
     >
+      <option value="">Не вибрано</option>
       {uniqueArray.map((country, index) => (
         <option value={country.region} key={index}>
           {country.region}

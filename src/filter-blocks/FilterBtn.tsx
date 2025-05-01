@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ICountryClean } from "./TYPE";
+import { ICountryClean } from "../TYPE";
 interface IFilterBtn {
   popChange: number;
   selectedValue: string | undefined;
@@ -23,7 +23,7 @@ function newFilteredArray(
       if (item.region === selectedValue) {
         return item;
       }
-    } else if (popChange > 0 && selectedValue === undefined) {
+    } else if (popChange > 0 && selectedValue === "") {
       if (item.population >= popChange) {
         return item;
       }

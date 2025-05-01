@@ -34,10 +34,21 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
     loadData();
   }, []);
 
+  function pagination(arrLength: number, numberVisibleRows: number): number[] {
+    let numberPagin: number = Math.round(arrLength / numberVisibleRows);
+    let arrayNumbers: number[] = [];
+    for (let index = 1; index <= numberPagin; index++) {
+      arrayNumbers.push(index);
+    }
+    return arrayNumbers;
+  }
+  const number = pagination(250, 10);
+  console.log(number);
+
   return (
     <div className="table-countries">
       {activeFilter
-        ? filterArray.map(
+        ? filterArray.slice(0, 10).map(
             (country: ICountryClean, index: number): JSX.Element => (
               <div key={index} className="country-row">
                 <div className="country-naming">
@@ -47,12 +58,14 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
                   <h2>{country.name}</h2>
                   <h3>{country.capital}</h3>
                 </div>
-                <p className="country-population">{country.population}</p>
+                <p className="country-population">
+                  {country.population.toLocaleString("ru")}
+                </p>
                 <p className="counry-region">{country.region}</p>
               </div>
             )
           )
-        : data.map(
+        : data.slice(0, 10).map(
             (country: ICountryClean, index: number): JSX.Element => (
               <div key={index} className="country-row">
                 <div className="country-naming">
@@ -62,7 +75,9 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
                   <h2>{country.name}</h2>
                   <h3>{country.capital}</h3>
                 </div>
-                <p className="country-population">{country.population}</p>
+                <p className="country-population">
+                  {country.population.toLocaleString("ru")}
+                </p>
                 <p className="counry-region">{country.region}</p>
               </div>
             )
