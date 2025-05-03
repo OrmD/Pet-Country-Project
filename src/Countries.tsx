@@ -2,6 +2,7 @@ import axios from "axios";
 import { JSX, useEffect, useState, FC } from "react";
 
 import { ICountryRaw, ICountryClean } from "./TYPE";
+const numberCountryRow: number = 10;
 
 interface ICountiesProps {
   filterArray: ICountryClean[];
@@ -25,7 +26,9 @@ export async function getDataCountries() {
 
 const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
   const [data, setData] = useState<ICountryClean[]>([]);
-
+  const [activeByttonP, setActiveButtonP] = useState(0);
+  let starPos = activeByttonP * numberCountryRow;
+  let endPos = starPos + numberCountryRow;
   useEffect(() => {
     async function loadData() {
       const countries = await getDataCountries();
@@ -34,23 +37,43 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
     loadData();
   }, []);
 
-  function pagination(arrLength: number, numberVisibleRows: number): number[] {
-    let numberPagin: number = Math.round(arrLength / numberVisibleRows);
+  function pagination(
+    arrLength: number,
+    fitArrLength: number,
+    numberVisibleRows: number,
+    activeFilter: boolean
+  ): number[] {
+    let numberPagin: number;
+    if (activeFilter) {
+      numberPagin = Math.round(fitArrLength / numberVisibleRows);
+    } else {
+      numberPagin = Math.round(arrLength / numberVisibleRows);
+    }
+
     let arrayNumbers: number[] = [];
     for (let index = 1; index <= numberPagin; index++) {
       arrayNumbers.push(index);
     }
     return arrayNumbers;
   }
-  const number = pagination(250, 10);
-  console.log(number);
+  const numberPagination = pagination(
+    data.length,
+    filterArray.length,
+    numberCountryRow,
+    activeFilter
+  );
+
+  function activePaginationButton(value: number) {
+    setActiveButtonP(value);
+  }
 
   return (
     <div className="table-countries">
       {activeFilter
-        ? filterArray.slice(0, 10).map(
+        ? filterArray.slice(starPos, endPos).map(
             (country: ICountryClean, index: number): JSX.Element => (
               <div key={index} className="country-row">
+                <span>{starPos + index + 1}</span>
                 <div className="country-naming">
                   <div className="country-img">
                     <img src={country.flags} alt="" />
@@ -65,9 +88,10 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
               </div>
             )
           )
-        : data.slice(0, 10).map(
+        : data.slice(starPos, endPos).map(
             (country: ICountryClean, index: number): JSX.Element => (
               <div key={index} className="country-row">
+                <span>{starPos + index + 1}</span>
                 <div className="country-naming">
                   <div className="country-img">
                     <img src={country.flags} alt="" />
@@ -82,6 +106,18 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
               </div>
             )
           )}
+      {numberPagination.map(
+        (e, index): JSX.Element => (
+          <button
+            type="button"
+            key={index}
+            onClick={() => activePaginationButton(index)}
+            className={activeByttonP === index ? "active" : ""}
+          >
+            {e}
+          </button>
+        )
+      )}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import FilterBtn from "./FilterBtn";
 import RegionSelect from "./Region";
 import PopulationInput from "./Population";
 import { ICountryClean } from "../TYPE";
+import SortAtoZ from "./SortAtoZ";
 
 interface IBlockFiltring {
   countries: ICountryClean[];
@@ -20,6 +21,7 @@ const BlockFiltring: FC<IBlockFiltring> = ({
 }) => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>("");
   const [popChange, setPopChange] = useState<number>(0);
+  const [sortClick, setSortClick] = useState(0);
 
   useEffect(() => {
     if (filtArray.length !== 0) {
@@ -35,8 +37,21 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     ) => ICountryClean[]
   ) => {
     const resultArray = func(selectedValue, countries, popChange);
-    setFiltArray(resultArray);
+    switch (sortClick) {
+      case 0:
+        setFiltArray(resultArray);
+        break;
+      case 1:
+        resultArray.sort((a, b) => a.population - b.population);
+        break;
+      case 2:
+        resultArray.sort((a, b) => b.population - a.population);
+        break;
+      default:
+        break;
+    }
   };
+
   const handleCkick = () => {
     setSelectedValue("");
     setPopChange(0);
@@ -70,6 +85,7 @@ const BlockFiltring: FC<IBlockFiltring> = ({
           </button>
         )}
       </FilterBtn>
+      <SortAtoZ sortClick={sortClick} setSortClick={setSortClick} />
     </div>
   );
 };

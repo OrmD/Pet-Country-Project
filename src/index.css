@@ -92,3 +92,17 @@ input {
 	letter-spacing: 1.2px;
 	font-size: 20px;
 }
+.active {
+	background-color: #628dc5b9;
+}
+.img-sorting {
+	cursor: pointer;
+	transition: all 0.3s ease-in 0s;
+}
+.down {
+	fill: #0ca32fa8;
+}
+.up {
+	fill: #0ca32fa8;
+	transition: all 0.3s ease-in 0s;
+}
