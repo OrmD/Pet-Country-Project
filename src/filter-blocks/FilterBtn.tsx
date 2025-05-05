@@ -7,7 +7,7 @@ interface IFilterBtn {
     func: (
       selectedValue: string | undefined,
       countries: ICountryClean[],
-      popChange: number | string
+      popChange: string
     ) => ICountryClean[]
   ) => void;
   children: React.ReactNode;
@@ -16,10 +16,10 @@ interface IFilterBtn {
 export function newFilteredArray(
   selectedValue: string | undefined,
   array: ICountryClean[],
-  popChange: number | string
+  popChange: string
 ): ICountryClean[] {
   let newArray: ICountryClean[] = array.filter((item) => {
-    if (popChange === 0) {
+    if (+popChange === 0) {
       if (item.region === selectedValue) {
         return item;
       }

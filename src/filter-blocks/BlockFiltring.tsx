@@ -21,7 +21,7 @@ const BlockFiltring: FC<IBlockFiltring> = ({
   setActiveFilter,
 }) => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>("");
-  const [popChange, setPopChange] = useState<number | string>("");
+  const [popChange, setPopChange] = useState<string>("");
   const [sortClick, setSortClick] = useState<number>(0);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     func: (
       selectedValue: string | undefined,
       countries: ICountryClean[],
-      popChange: number | string
+      popChange: string
     ) => ICountryClean[]
   ) => {
     const resultArray = func(selectedValue, countries, popChange);
@@ -78,7 +78,7 @@ const BlockFiltring: FC<IBlockFiltring> = ({
 
   function getInput(inputEl: React.RefObject<HTMLInputElement | null>) {
     if (inputEl.current !== null) {
-      setPopChange(Number(inputEl.current.value));
+      setPopChange(inputEl.current.value);
     }
     console.log(popChange);
   }
