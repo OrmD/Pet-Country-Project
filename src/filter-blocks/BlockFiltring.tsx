@@ -28,9 +28,6 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     if (filtArray.length !== 0) {
       setActiveFilter(true);
     }
-    if (sortClick === 0) {
-      setActiveFilter(false);
-    }
   }, [filtArray]);
 
   const renderNewArray = (
@@ -43,6 +40,7 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     const resultArray = func(selectedValue, countries, popChange);
     setFiltArray(resultArray);
   };
+
   useEffect(() => {
     // Якщо фільтрація активна, працюємо з відфільтрованим масивом, інакше - з оригінальним
     let arrayToSort = activeFilter ? filtArray : countries;
@@ -69,7 +67,7 @@ const BlockFiltring: FC<IBlockFiltring> = ({
         setFiltArray(arrayToSort);
         break;
     }
-  }, [sortClick, activeFilter, countries, filtArray]); // Додано всі залежності
+  }, [sortClick]); // Додано всі залежності
 
   const handleCkick = () => {
     setSelectedValue("");
@@ -94,7 +92,11 @@ const BlockFiltring: FC<IBlockFiltring> = ({
   }
   return (
     <div className="functional-block">
-      <PopulationInput popChange={popChange} getInputValue={getInput} />
+      <PopulationInput
+        popChange={popChange}
+        getInputValue={getInput}
+        activefilter={activeFilter}
+      />
       <RegionSelect
         countries={countries}
         onSelectChange={setSelectedValue}

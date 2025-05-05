@@ -1,11 +1,13 @@
 import { FC, useRef, useState } from "react";
 interface IPopulationInput {
-  popChange: number| string;
+  popChange: number | string;
   getInputValue: (inputEl: React.RefObject<HTMLInputElement | null>) => void;
+  activefilter: boolean;
 }
 const PopulationInput: FC<IPopulationInput> = ({
   popChange,
   getInputValue,
+  activefilter,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -16,7 +18,7 @@ const PopulationInput: FC<IPopulationInput> = ({
       id="popul"
       ref={inputRef}
       onChange={() => getInputValue(inputRef)}
-      value={popChange}
+      value={activefilter ? "" : popChange}
     />
   );
 };
