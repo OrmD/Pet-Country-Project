@@ -21,6 +21,7 @@ function App() {
       <main>
         <BlockFiltring
           countries={countries}
+		  setCountries={setCountries}
           activeFilter={activeFilter}
           filtArray={filtArray}
           setFiltArray={setFiltArray}

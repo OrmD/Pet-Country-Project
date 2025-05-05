@@ -1,6 +1,6 @@
 import { FC, useRef, useState } from "react";
 interface IPopulationInput {
-  popChange: number;
+  popChange: number| string;
   getInputValue: (inputEl: React.RefObject<HTMLInputElement | null>) => void;
 }
 const PopulationInput: FC<IPopulationInput> = ({

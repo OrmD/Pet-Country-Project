@@ -1,16 +1,19 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { ICountryClean } from "../TYPE";
 
 interface ISortAtoZ {
+  activeFilter: boolean;
+  countries: ICountryClean[];
   sortClick: number;
   setSortClick: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SortAtoZ: FC<ISortAtoZ> = ({ sortClick, setSortClick }) => {
+const SortAtoZ: FC<ISortAtoZ> = ({ sortClick, setSortClick, activeFilter }) => {
   const [sortActive, setSortActive] = useState("");
   const [svg, setSvg] = useState(false);
 
   function typeSort() {
-    let nextClick = sortClick + 1;
+    let nextClick = +sortClick + 1;
 
     if (nextClick === 1) {
       setSortActive("down");
@@ -25,6 +28,11 @@ const SortAtoZ: FC<ISortAtoZ> = ({ sortClick, setSortClick }) => {
 
     setSortClick(nextClick);
   }
+  useEffect(() => {
+    if (!activeFilter) {
+      setSortActive("");
+    }
+  }, [activeFilter]);
   return (
     <>
       {svg ? (

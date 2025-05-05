@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import FilterBtn from "./FilterBtn";
+import FilterBtn, { newFilteredArray } from "./FilterBtn";
 import RegionSelect from "./Region";
 import PopulationInput from "./Population";
 import { ICountryClean } from "../TYPE";
@@ -11,6 +11,7 @@ interface IBlockFiltring {
   filtArray: ICountryClean[];
   setFiltArray: React.Dispatch<React.SetStateAction<ICountryClean[]>>;
   setActiveFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  setCountries: React.Dispatch<React.SetStateAction<ICountryClean[]>>;
 }
 const BlockFiltring: FC<IBlockFiltring> = ({
   countries,
@@ -20,12 +21,15 @@ const BlockFiltring: FC<IBlockFiltring> = ({
   setActiveFilter,
 }) => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>("");
-  const [popChange, setPopChange] = useState<number>(0);
-  const [sortClick, setSortClick] = useState(0);
+  const [popChange, setPopChange] = useState<number | string>("");
+  const [sortClick, setSortClick] = useState<number>(0);
 
   useEffect(() => {
     if (filtArray.length !== 0) {
       setActiveFilter(true);
+    }
+    if (sortClick === 0) {
+      setActiveFilter(false);
     }
   }, [filtArray]);
 
@@ -33,28 +37,44 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     func: (
       selectedValue: string | undefined,
       countries: ICountryClean[],
-      popChange: number
+      popChange: number | string
     ) => ICountryClean[]
   ) => {
     const resultArray = func(selectedValue, countries, popChange);
+    setFiltArray(resultArray);
+  };
+  useEffect(() => {
+    // Якщо фільтрація активна, працюємо з відфільтрованим масивом, інакше - з оригінальним
+    let arrayToSort = activeFilter ? filtArray : countries;
+
+    // Створюємо копію масиву для уникнення мутації оригіналу
+    let sorted = [...arrayToSort];
+
+    // Оновлюємо стан в залежності від значення sortClick
     switch (sortClick) {
       case 0:
-        setFiltArray(resultArray);
+        // Якщо sortClick = 0, просто повертаємо вихідний масив (без сортування)
+        setFiltArray(arrayToSort);
         break;
       case 1:
-        resultArray.sort((a, b) => a.population - b.population);
+        // Сортуємо за спаданням
+        setFiltArray(sorted.sort((a, b) => b.population - a.population));
         break;
       case 2:
-        resultArray.sort((a, b) => b.population - a.population);
+        // Сортуємо за зростанням
+        setFiltArray(sorted.sort((a, b) => a.population - b.population));
         break;
       default:
+        // Якщо немає сортування, повертаємо поточний масив без змін
+        setFiltArray(arrayToSort);
         break;
     }
-  };
+  }, [sortClick, activeFilter, countries, filtArray]); // Додано всі залежності
 
   const handleCkick = () => {
     setSelectedValue("");
-    setPopChange(0);
+    setPopChange("");
+    setSortClick(0);
     setActiveFilter(false);
   };
 
@@ -65,6 +85,13 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     console.log(popChange);
   }
 
+  function classActive() {
+    if (sortClick !== 0) {
+      return "active";
+    } else if (sortClick) {
+      return "false";
+    }
+  }
   return (
     <div className="functional-block">
       <PopulationInput popChange={popChange} getInputValue={getInput} />
@@ -79,13 +106,16 @@ const BlockFiltring: FC<IBlockFiltring> = ({
         renderNewArray={renderNewArray}
         popChange={popChange}
       >
-        {activeFilter && (
-          <button type="button" onClick={handleCkick}>
-            Reset
-          </button>
-        )}
+        <button type="button" onClick={handleCkick} className={classActive()}>
+          Reset
+        </button>
       </FilterBtn>
-      <SortAtoZ sortClick={sortClick} setSortClick={setSortClick} />
+      <SortAtoZ
+        sortClick={sortClick}
+        setSortClick={setSortClick}
+        countries={countries}
+        activeFilter={activeFilter}
+      />
     </div>
   );
 };

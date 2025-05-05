@@ -97,12 +97,12 @@ input {
 }
 .img-sorting {
 	cursor: pointer;
-	transition: all 0.3s ease-in 0s;
+	transition: all 0.2s ease-in 0s;
 }
 .down {
 	fill: #0ca32fa8;
 }
 .up {
 	fill: #0ca32fa8;
-	transition: all 0.3s ease-in 0s;
+	transition: all 0.2s ease-in 0s;
 }
