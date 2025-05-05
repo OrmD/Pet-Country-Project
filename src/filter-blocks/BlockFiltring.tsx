@@ -12,6 +12,9 @@ interface IBlockFiltring {
   setFiltArray: React.Dispatch<React.SetStateAction<ICountryClean[]>>;
   setActiveFilter: React.Dispatch<React.SetStateAction<boolean>>;
   setCountries: React.Dispatch<React.SetStateAction<ICountryClean[]>>;
+  setSortArray: React.Dispatch<React.SetStateAction<ICountryClean[]>>;
+  sortClick: number;
+  setSortClick: React.Dispatch<React.SetStateAction<number>>;
 }
 const BlockFiltring: FC<IBlockFiltring> = ({
   countries,
@@ -19,10 +22,12 @@ const BlockFiltring: FC<IBlockFiltring> = ({
   filtArray,
   setFiltArray,
   setActiveFilter,
+  setSortArray,
+  setSortClick,
+  sortClick,
 }) => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>("");
   const [popChange, setPopChange] = useState<string>("");
-  const [sortClick, setSortClick] = useState<number>(0);
 
   useEffect(() => {
     if (filtArray.length !== 0) {
@@ -52,19 +57,19 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     switch (sortClick) {
       case 0:
         // Якщо sortClick = 0, просто повертаємо вихідний масив (без сортування)
-        setFiltArray(arrayToSort);
+        setSortArray(arrayToSort);
         break;
       case 1:
         // Сортуємо за спаданням
-        setFiltArray(sorted.sort((a, b) => b.population - a.population));
+        setSortArray(sorted.sort((a, b) => b.population - a.population));
         break;
       case 2:
         // Сортуємо за зростанням
-        setFiltArray(sorted.sort((a, b) => a.population - b.population));
+        setSortArray(sorted.sort((a, b) => a.population - b.population));
         break;
       default:
         // Якщо немає сортування, повертаємо поточний масив без змін
-        setFiltArray(arrayToSort);
+        setSortArray(arrayToSort);
         break;
     }
   }, [sortClick]); // Додано всі залежності
@@ -80,7 +85,6 @@ const BlockFiltring: FC<IBlockFiltring> = ({
     if (inputEl.current !== null) {
       setPopChange(inputEl.current.value);
     }
-    console.log(popChange);
   }
 
   function classActive() {

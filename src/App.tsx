@@ -6,6 +6,8 @@ import BlockFiltring from "./filter-blocks/BlockFiltring";
 function App() {
   const [countries, setCountries] = useState<ICountryClean[]>([]);
   const [filtArray, setFiltArray] = useState<ICountryClean[]>([]);
+  const [sortArray, setSortArray] = useState<ICountryClean[]>([]);
+  const [sortClick, setSortClick] = useState<number>(0);
   const [activeFilter, setActiveFilter] = useState(false);
 
   useEffect(() => {
@@ -21,14 +23,22 @@ function App() {
       <main>
         <BlockFiltring
           countries={countries}
-		  setCountries={setCountries}
+          setCountries={setCountries}
           activeFilter={activeFilter}
           filtArray={filtArray}
           setFiltArray={setFiltArray}
           setActiveFilter={setActiveFilter}
+          setSortArray={setSortArray}
+          sortClick={sortClick}
+          setSortClick={setSortClick}
         />
 
-        <CountriesList filterArray={filtArray} activeFilter={activeFilter} />
+        <CountriesList
+          filterArray={filtArray}
+          activeFilter={activeFilter}
+          sortArray={sortArray}
+          sortClick={sortClick}
+        />
       </main>
     </>
   );

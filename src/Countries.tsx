@@ -6,6 +6,8 @@ const numberCountryRow: number = 10;
 
 interface ICountiesProps {
   filterArray: ICountryClean[];
+  sortArray: ICountryClean[];
+  sortClick: number;
   activeFilter: boolean;
 }
 
@@ -24,7 +26,12 @@ export async function getDataCountries() {
   return cleanData;
 }
 
-const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
+const CountriesList: FC<ICountiesProps> = ({
+  activeFilter,
+  filterArray,
+  sortArray,
+  sortClick,
+}) => {
   const [data, setData] = useState<ICountryClean[]>([]);
   const [activeByttonP, setActiveButtonP] = useState(0);
   let starPos = activeByttonP * numberCountryRow;
@@ -67,10 +74,22 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
     setActiveButtonP(value);
   }
 
+  let sortOrFiltArr = sortClick !== 0 ? sortArray : filterArray;
+
+  function sortOrnot() {
+    if (!activeFilter && sortArray.length !== 0 && sortClick == 0) {
+      return data;
+    } else if (sortArray.length !== 0) {
+      return sortArray;
+    }
+
+    return data;
+  }
+  let sortOrData = sortOrnot();
   return (
     <div className="table-countries">
       {activeFilter
-        ? filterArray.slice(starPos, endPos).map(
+        ? sortOrFiltArr.slice(starPos, endPos).map(
             (country: ICountryClean, index: number): JSX.Element => (
               <div key={index} className="country-row">
                 <span>{starPos + index + 1}</span>
@@ -88,7 +107,7 @@ const CountriesList: FC<ICountiesProps> = ({ activeFilter, filterArray }) => {
               </div>
             )
           )
-        : data.slice(starPos, endPos).map(
+        : sortOrData.slice(starPos, endPos).map(
             (country: ICountryClean, index: number): JSX.Element => (
               <div key={index} className="country-row">
                 <span>{starPos + index + 1}</span>
