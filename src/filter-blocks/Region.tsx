@@ -1,16 +1,14 @@
 import { FC } from "react";
-import { ICountryClean } from "../TYPE";
+import { TFilterValues } from "../TYPE";
 interface regionType {
-  activeFilter: boolean;
-  countries: ICountryClean[];
+  countries: TFilterValues["countries"];
   onSelectChange: (value: string) => void;
-  selectValue: string | undefined;
+  selectValue: TFilterValues["selectedValue"];
 }
 
 const RegionSelect: FC<regionType> = ({
   countries,
   onSelectChange,
-  activeFilter,
   selectValue,
 }) => {
   const uniqueArray = countries.filter(
@@ -18,16 +16,6 @@ const RegionSelect: FC<regionType> = ({
       index === self.findIndex((t) => t.region === value.region)
   );
 
-  function nonSelected(ativeFilter: boolean) {
-    if (!ativeFilter) {
-      return (
-        <option value={undefined} selected>
-          Не вибрано
-        </option>
-      );
-    }
-    return <option value={undefined}>Не вибрано</option>;
-  }
   return (
     <select
       name="select-region"

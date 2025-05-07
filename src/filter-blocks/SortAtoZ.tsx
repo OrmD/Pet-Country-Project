@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
-import { ICountryClean } from "../TYPE";
+import { TFilterActive, TFilterValues } from "../TYPE";
 
 interface ISortAtoZ {
-  activeFilter: boolean;
-  countries: ICountryClean[];
-  sortClick: number;
-  setSortClick: React.Dispatch<React.SetStateAction<number>>;
+  activeFilter: TFilterActive["activeFilter"];
+  countries: TFilterValues["countries"];
+  sortClick: TFilterActive["sortClick"];
+  setSortClick: TFilterActive["setSortClick"];
 }
 
 const SortAtoZ: FC<ISortAtoZ> = ({ sortClick, setSortClick, activeFilter }) => {

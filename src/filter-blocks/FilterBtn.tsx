@@ -1,24 +1,24 @@
 import { FC } from "react";
-import { ICountryClean } from "../TYPE";
+import { ICountryClean, TFilterValues } from "../TYPE";
 interface IFilterBtn {
-  popChange: number | string;
-  selectedValue: string | undefined;
+  popChange: TFilterValues["popChange"];
+  selectedValue: TFilterValues["selectedValue"];
   renderNewArray: (
-    func: (
-      selectedValue: string | undefined,
-      countries: ICountryClean[],
-      popChange: string
-    ) => ICountryClean[]
+    func: ({
+      selectedValue,
+      countries,
+      popChange,
+    }: TFilterValues) => ICountryClean[]
   ) => void;
   children: React.ReactNode;
 }
 
-export function newFilteredArray(
-  selectedValue: string | undefined,
-  array: ICountryClean[],
-  popChange: string
-): ICountryClean[] {
-  let newArray: ICountryClean[] = array.filter((item) => {
+export function newFilteredArray({
+  selectedValue,
+  countries,
+  popChange,
+}: TFilterValues): ICountryClean[] {
+  let newArray: ICountryClean[] = countries.filter((item) => {
     if (+popChange === 0) {
       if (item.region === selectedValue) {
         return item;

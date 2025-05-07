@@ -1,14 +1,16 @@
 import axios from "axios";
 import { JSX, useEffect, useState, FC } from "react";
 
-import { ICountryRaw, ICountryClean } from "./TYPE";
+import { ICountryRaw, ICountryClean, TFilterActive } from "./TYPE";
+import { pagination } from "./functions/Diff-functions";
+
 const numberCountryRow: number = 10;
 
 interface ICountiesProps {
   filterArray: ICountryClean[];
   sortArray: ICountryClean[];
-  sortClick: number;
-  activeFilter: boolean;
+  sortClick: TFilterActive["sortClick"];
+  activeFilter: TFilterActive["activeFilter"];
 }
 
 export async function getDataCountries() {
@@ -44,25 +46,6 @@ const CountriesList: FC<ICountiesProps> = ({
     loadData();
   }, []);
 
-  function pagination(
-    arrLength: number,
-    fitArrLength: number,
-    numberVisibleRows: number,
-    activeFilter: boolean
-  ): number[] {
-    let numberPagin: number;
-    if (activeFilter) {
-      numberPagin = Math.round(fitArrLength / numberVisibleRows);
-    } else {
-      numberPagin = Math.round(arrLength / numberVisibleRows);
-    }
-
-    let arrayNumbers: number[] = [];
-    for (let index = 1; index <= numberPagin; index++) {
-      arrayNumbers.push(index);
-    }
-    return arrayNumbers;
-  }
   const numberPagination = pagination(
     data.length,
     filterArray.length,
@@ -75,7 +58,6 @@ const CountriesList: FC<ICountiesProps> = ({
   }
 
   let sortOrFiltArr = sortClick !== 0 ? sortArray : filterArray;
-
   function sortOrnot() {
     if (!activeFilter && sortArray.length !== 0 && sortClick == 0) {
       return data;

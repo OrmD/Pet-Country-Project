@@ -21,3 +21,14 @@ export interface ICountryClean {
   population: number;
   region: string;
 }
+
+export type TFilterValues = {
+  selectedValue: string | undefined;
+  countries: ICountryClean[];
+  popChange: string;
+};
+export type TFilterActive = {
+  activeFilter: boolean;
+  sortClick: number;
+  setSortClick: React.Dispatch<React.SetStateAction<number>>;
+};

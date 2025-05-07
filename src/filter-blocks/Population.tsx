@@ -1,16 +1,15 @@
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
+import { TFilterValues } from "../TYPE";
 interface IPopulationInput {
-  popChange: string;
+  popChange: TFilterValues["popChange"];
   getInputValue: (inputEl: React.RefObject<HTMLInputElement | null>) => void;
-  activefilter: boolean;
 }
+
 const PopulationInput: FC<IPopulationInput> = ({
   popChange,
   getInputValue,
-  activefilter,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-
   return (
     <input
       type="number"
