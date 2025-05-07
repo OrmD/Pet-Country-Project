@@ -87,57 +87,65 @@ const CountriesList: FC<ICountiesProps> = ({
   }
   let sortOrData = sortOrnot();
   return (
-    <div className="table-countries">
-      {activeFilter
-        ? sortOrFiltArr.slice(starPos, endPos).map(
-            (country: ICountryClean, index: number): JSX.Element => (
-              <div key={index} className="country-row">
-                <span>{starPos + index + 1}</span>
-                <div className="country-naming">
-                  <div className="country-img">
-                    <img src={country.flags} alt="" />
+    <>
+      <div className="table-countries">
+        {activeFilter
+          ? sortOrFiltArr.slice(starPos, endPos).map(
+              (country: ICountryClean, index: number): JSX.Element => (
+                <div key={index} className="country-row">
+                  <span>{starPos + index + 1}</span>
+                  <div className="country-naming">
+                    <div className="country-img">
+                      <img src={country.flags} alt="" />
+                    </div>
+                    <h2>{country.name}</h2>
+                    <h3>{country.capital}</h3>
                   </div>
-                  <h2>{country.name}</h2>
-                  <h3>{country.capital}</h3>
+                  <p className="country-population">
+                    {country.population.toLocaleString("ru")}
+                  </p>
+                  <p className="counry-region">{country.region}</p>
                 </div>
-                <p className="country-population">
-                  {country.population.toLocaleString("ru")}
-                </p>
-                <p className="counry-region">{country.region}</p>
-              </div>
+              )
             )
+          : sortOrData.slice(starPos, endPos).map(
+              (country: ICountryClean, index: number): JSX.Element => (
+                <div key={index} className="country-row">
+                  <span>{starPos + index + 1}</span>
+                  <div className="country-naming">
+                    <div className="country-img">
+                      <img src={country.flags} alt="" />
+                    </div>
+                    <h2>{country.name}</h2>
+                    <h3>{country.capital}</h3>
+                  </div>
+                  <p className="country-population">
+                    {country.population.toLocaleString("ru")}
+                  </p>
+                  <p className="counry-region">{country.region}</p>
+                </div>
+              )
+            )}
+      </div>
+      <div className="pagination-block">
+        {numberPagination.map(
+          (e, index): JSX.Element => (
+            <button
+              type="button"
+              key={index}
+              onClick={() => activePaginationButton(index)}
+              className={
+                activeByttonP === index
+                  ? "active paginationButton"
+                  : "paginationButton"
+              }
+            >
+              {e}
+            </button>
           )
-        : sortOrData.slice(starPos, endPos).map(
-            (country: ICountryClean, index: number): JSX.Element => (
-              <div key={index} className="country-row">
-                <span>{starPos + index + 1}</span>
-                <div className="country-naming">
-                  <div className="country-img">
-                    <img src={country.flags} alt="" />
-                  </div>
-                  <h2>{country.name}</h2>
-                  <h3>{country.capital}</h3>
-                </div>
-                <p className="country-population">
-                  {country.population.toLocaleString("ru")}
-                </p>
-                <p className="counry-region">{country.region}</p>
-              </div>
-            )
-          )}
-      {numberPagination.map(
-        (e, index): JSX.Element => (
-          <button
-            type="button"
-            key={index}
-            onClick={() => activePaginationButton(index)}
-            className={activeByttonP === index ? "active" : ""}
-          >
-            {e}
-          </button>
-        )
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 export default CountriesList;

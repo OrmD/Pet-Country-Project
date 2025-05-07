@@ -88,12 +88,12 @@ const BlockFiltring: FC<IBlockFiltring> = ({
   }
 
   function classActive() {
-    if (sortClick !== 0) {
-      return "active";
-    } else if (sortClick) {
-      return "false";
+    if (sortClick !== 0 || activeFilter) {
+      return "active reset-btn";
     }
+    return "reset-btn";
   }
+
   return (
     <div className="functional-block">
       <PopulationInput
