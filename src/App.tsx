@@ -1,4 +1,4 @@
-import CountriesList, { getDataCountries } from "./Countries";
+import CountriesList, { getDataCountries } from "./list-countries/Countries";
 import { useEffect, useState } from "react";
 import { ICountryClean } from "./TYPE";
 import BlockFiltring from "./filter-blocks/BlockFiltring";

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { numberCountryRow } from "./TYPE";
+import { numberCountryRow } from "../TYPE";
 
 const arr = Array(numberCountryRow)
   .fill(0)
