@@ -1,3 +1,4 @@
+export const numberCountryRow: number = 10;
 export interface ICountryRaw {
   capital?: string[];
   flags: {

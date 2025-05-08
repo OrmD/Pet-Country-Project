@@ -13,7 +13,9 @@ function App() {
   useEffect(() => {
     async function loadCountries() {
       const data = await getDataCountries();
-      setCountries(data);
+      if (data) {
+        setCountries(data);
+      }
     }
     loadCountries();
   }, []);
