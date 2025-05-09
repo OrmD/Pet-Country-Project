@@ -1,5 +1,5 @@
 import axios from "axios";
-import { JSX, useEffect, useState, FC } from "react";
+import { useEffect, useState, FC } from "react";
 
 import {
   ICountryRaw,
