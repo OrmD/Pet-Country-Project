@@ -9,7 +9,7 @@ console.log(arr);
 const Skeleton: FC = () => {
   return (
     <>
-      {arr.map((index, e) => (
+      {arr.map((index) => (
         <div className="skeleton" key={index}></div>
       ))}
     </>
