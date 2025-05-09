@@ -1,54 +1,38 @@
-# React + TypeScript + Vite
+# 🌍 Country Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Проєкт, створений з використанням сучасного стеку технологій: **HTML**, **CSS**, **TypeScript**, **React**, **Vite**, **Git**. Цей застосунок дозволяє отримувати список країн через API, відображати їх на сторінці, фільтрувати за різними критеріями та зручно переглядати.
 
-Currently, two official plugins are available:
+## 🔧 Технології
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **HTML / CSS** — основа розмітки та стилів
+- **TypeScript** — використано типи, інтерфейси, FC (Functional Components)
+- **React** — використано хуки: `useState`, `useEffect`, `useRef`, передача `props`, події `onClick`, `onChange`
+- **Vite** — швидкий збірник для розробки
+- **Axios** — бібліотека для запитів до API
+- **Git** — контроль версій
 
-## Expanding the ESLint configuration
+## ⚙️ Функціонал
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Отримання даних про країни з API
+- Виведення списку країн на сторінку
+- **Фільтрація**:
+  - за **населенням**
+  - за **регіоном**
+- **Сортування** країн
+- **Пагінація**, яка адаптується до кількості країн
+- Кнопка **"Скинути фільтри"**
+- Відображення **скелетонів** під час завантаження даних
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🧠 Використані можливості JavaScript
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Умовні конструкції: `if`, `switch`
+- Цикли: `for`
+- Оператори: спред `...`, `Math.round`, `async/await`, `try/catch`
+- Робота з масивами:
+  - `sort`, `filter`, `map`, `push`, `slice`, `fill`, `findIndex`, `Array`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Запуск проєкту
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+1. Клонувати репозиторій:
+   ```bash
+   git clone https://github.com/your-username/country-explorer.git
